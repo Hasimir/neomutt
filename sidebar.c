@@ -52,6 +52,7 @@ struct SbEntry
   char box[STRING]; /* formatted mailbox name */
   struct Buffy *buffy;
   short is_hidden;
+  short doesnt_match;
 };
 
 static int EntryCount = 0;
@@ -832,6 +833,8 @@ static void draw_sidebar(int num_rows, int num_cols, int div_width)
     entry = Entries[entryidx];
     if (entry->is_hidden)
       continue;
+    if (entry->doesnt_match)
+      continue;
     b = entry->buffy;
 
     if (entryidx == OpnIndex)
@@ -1220,4 +1223,64 @@ void mutt_sb_toggle_virtual(void)
     mutt_sb_notify_mailbox(b, 1);
 
   mutt_set_current_menu_redraw(REDRAW_SIDEBAR);
+}
+
+int matcher_cb(struct EnterState *state, const char *pattern)
+{
+  int i;
+
+  for (i = 0; i < EntryCount; i++)
+  {
+    // if (strcasestr (Entries[i]->buffy->path, pattern) == NULL)
+    if (strcasestr(Entries[i]->box, pattern) == NULL)
+      Entries[i]->doesnt_match = 1;
+    else
+      Entries[i]->doesnt_match = 0;
+  }
+
+  TopIndex = 0;
+  OpnIndex = 0;
+  HilIndex = 0;
+  BotIndex = 0;
+  mutt_sb_draw();
+  return 0;
+}
+
+struct Buffy *mutt_sb_start_search(void)
+{
+  char *prompt = "Sidebar search:";
+  char buf[128] = "";
+  int i;
+
+  for (i = 0; i < EntryCount; i++)
+  {
+    struct SbEntry *e = Entries[i];
+
+    e->doesnt_match = 0;
+    if (e->box[0] == 0)
+    {
+      char *last = strrchr(e->buffy->path, '/');
+      if (!last)
+        last = e->buffy->path;
+      strfcpy(e->box, last, sizeof(e->box));
+    }
+  }
+
+  move(LINES - 1, 0);
+  addstr(prompt);
+
+  int rc = mutt_string_matcher(buf, sizeof(buf), mutt_strwidth(prompt) + 1,
+                               MUTT_MATCHER, matcher_cb);
+  mutt_window_clearline(MuttMessageWindow, 0);
+
+  struct Buffy *b = NULL;
+  for (i = 0; i < EntryCount; i++)
+  {
+    if ((b == NULL) && (Entries[i]->doesnt_match == 0) && (rc == 0))
+      b = Entries[i]->buffy;
+    Entries[i]->doesnt_match = 0;
+  }
+  mutt_sb_draw();
+
+  return b;
 }
