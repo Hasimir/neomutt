@@ -2759,6 +2759,7 @@ int mutt_pager(const char *banner, const char *fname, int flags, struct Pager *e
         old_PagerIndexLines = PagerIndexLines;
 
         mutt_enter_command();
+        pager_menu->redraw = REDRAW_FULL;
 
         if (option(OPTNEEDRESORT))
         {
