@@ -6558,6 +6558,12 @@ mailboxes $my_mx +mailbox3</screen>
                 $duplicate_threads</link>)</entry>
               </row>
               <row>
+                <entry>~#</entry>
+                <entry>broken threads (see
+                  <link linkend="strict_threads">
+                    $strict_threads</link>)</entry>
+              </row>
+              <row>
                 <entry>~$</entry>
                 <entry>unreferenced messages (requires threaded view)</entry>
               </row>
