@@ -2423,7 +2423,8 @@ static int parse_set(struct Buffer *tmp, struct Buffer *s, unsigned long data,
     {
       if (query || unset || inv)
       {
-        snprintf(err->data, err->dsize, "%s", _("prefix is illegal with reset"));
+        snprintf(err->data, err->dsize, "%s",
+                 _("prefix is illegal with reset"));
         return -1;
       }
 
@@ -2437,7 +2438,8 @@ static int parse_set(struct Buffer *tmp, struct Buffer *s, unsigned long data,
       {
         if (CurrentMenu == MENU_PAGER)
         {
-          snprintf(err->data, err->dsize, "%s", _("Not available in this menu."));
+          snprintf(err->data, err->dsize, "%s",
+                   _("Not available in this menu."));
           return -1;
         }
         for (idx = 0; MuttVars[idx].option; idx++)
@@ -2464,7 +2466,8 @@ static int parse_set(struct Buffer *tmp, struct Buffer *s, unsigned long data,
       {
         if (unset || inv || query)
         {
-          snprintf(err->data, err->dsize, "%s", _("Usage: set variable=yes|no"));
+          snprintf(err->data, err->dsize, "%s",
+                   _("Usage: set variable=yes|no"));
           return -1;
         }
 
@@ -2476,7 +2479,8 @@ static int parse_set(struct Buffer *tmp, struct Buffer *s, unsigned long data,
           unset = 1;
         else
         {
-          snprintf(err->data, err->dsize, "%s", _("Usage: set variable=yes|no"));
+          snprintf(err->data, err->dsize, "%s",
+                   _("Usage: set variable=yes|no"));
           return -1;
         }
       }
@@ -3144,12 +3148,12 @@ static int parse_source(struct Buffer *tmp, struct Buffer *s,
 
   do
   {
-    if (mutt_extract_token(tmp, s,0) != 0)
+    if (mutt_extract_token(tmp, s, 0) != 0)
     {
-      snprintf(err->data,err->dsize, _("source: error at %s"), s->dptr);
+      snprintf(err->data, err->dsize, _("source: error at %s"), s->dptr);
       return -1;
     }
-    strfcpy(path, tmp->data,sizeof(path));
+    strfcpy(path, tmp->data, sizeof(path));
     mutt_expand_path(path, sizeof(path));
 
     rc += source_rc(path, err);
@@ -3882,11 +3886,7 @@ static int execute_commands(struct List *p)
 static char *find_cfg(const char *home, const char *xdg_cfg_home)
 {
   const char *names[] = {
-    "neomuttrc-" PACKAGE_VERSION,
-    "neomuttrc",
-    "muttrc-" MUTT_VERSION,
-    "muttrc",
-    NULL,
+    "neomuttrc-" PACKAGE_VERSION, "neomuttrc", "muttrc-" MUTT_VERSION, "muttrc", NULL,
   };
 
   const char *locations[][2] = {
@@ -3936,8 +3936,7 @@ void mutt_init(int skip_sys_rc, struct List *commands)
 
   Groups = hash_create(1031, 0);
   /* reverse alias keys need to be strdup'ed because of idna conversions */
-  ReverseAlias = hash_create(1031, MUTT_HASH_STRCASECMP | MUTT_HASH_STRDUP_KEYS |
-                                       MUTT_HASH_ALLOW_DUPS);
+  ReverseAlias = hash_create(1031, MUTT_HASH_STRCASECMP | MUTT_HASH_STRDUP_KEYS | MUTT_HASH_ALLOW_DUPS);
 #ifdef USE_NOTMUCH
   TagTransforms = hash_create(64, 1);
   TagFormats = hash_create(64, 0);
