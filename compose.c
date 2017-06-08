@@ -102,15 +102,23 @@ enum
 #define TITLE_FMT "%14s" /* Used for Prompts, which are ASCII */
 #define W (MuttIndexWindow->cols - HDR_XOFFSET)
 
-static const char *const Prompts[] = {
-  "From: ", "To: ", "Cc: ", "Bcc: ", "Subject: ", "Reply-To: ", "Fcc: "
+static const char *const Prompts[] = { "From: ",
+                                       "To: ",
+                                       "Cc: ",
+                                       "Bcc: ",
+                                       "Subject: ",
+                                       "Reply-To: ",
+                                       "Fcc: "
 #ifdef USE_NNTP
 #ifdef MIXMASTER
-  ,
-  ""
+                                       ,
+                                       ""
 #endif
-  ,
-  "", "Newsgroups: ", "Followup-To: ", "X-Comment-To: "
+                                       ,
+                                       "",
+                                       "Newsgroups: ",
+                                       "Followup-To: ",
+                                       "X-Comment-To: "
 #endif
 };
 
@@ -1107,9 +1115,10 @@ int mutt_compose_menu(struct Header *msg, /* structure for new message */
 
       case OP_COMPOSE_EDIT_DESCRIPTION:
         CHECK_COUNT;
-        strfcpy(buf, idx[menu->current]->content->description ?
-                         idx[menu->current]->content->description :
-                         "",
+        strfcpy(buf,
+                idx[menu->current]->content->description ?
+                    idx[menu->current]->content->description :
+                    "",
                 sizeof(buf));
         /* header names should not be translated */
         if (mutt_get_field("Description: ", buf, sizeof(buf), 0) == 0)
@@ -1496,7 +1505,8 @@ int mutt_compose_menu(struct Header *msg, /* structure for new message */
         {
           if (msg->security & (ENCRYPT | SIGN))
           {
-            if (mutt_yesorno(_("S/MIME already selected. Clear and continue ? "), MUTT_YES) != MUTT_YES)
+            if (mutt_yesorno(
+                    _("S/MIME already selected. Clear and continue ? "), MUTT_YES) != MUTT_YES)
             {
               mutt_clear_error();
               break;

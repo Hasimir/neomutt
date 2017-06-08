@@ -115,11 +115,6 @@ static struct CompileOptions comp_opts[] = {
 #else
   { "curs_set", 0 },
 #endif
-#ifdef DEBUG
-  { "debug", 1 },
-#else
-  { "debug", 0 },
-#endif
 #ifdef USE_DOTLOCK
   { "dotlock", 1 },
 #else

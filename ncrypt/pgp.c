@@ -102,7 +102,7 @@ int pgp_valid_passphrase(void)
  */
 bool pgp_use_gpg_agent(void)
 {
-  return option (OPTUSEGPGAGENT);
+  return option(OPTUSEGPGAGENT);
 }
 
 static struct PgpKeyInfo *_pgp_parent(struct PgpKeyInfo *k)

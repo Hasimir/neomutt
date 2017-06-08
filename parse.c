@@ -382,9 +382,10 @@ void mutt_parse_content_type(char *s, struct Body *ct)
   if (ct->type == TYPETEXT)
   {
     if (!(pc = mutt_get_parameter("charset", ct->parameter)))
-      mutt_set_parameter("charset", (AssumedCharset && *AssumedCharset) ?
-                                        (const char *) mutt_get_default_charset() :
-                                        "us-ascii",
+      mutt_set_parameter("charset",
+                         (AssumedCharset && *AssumedCharset) ?
+                             (const char *) mutt_get_default_charset() :
+                             "us-ascii",
                          &ct->parameter);
   }
 }

@@ -6,7 +6,7 @@ AUTOMAKE_OPTIONS = 1.6 foreign
 EXTRA_PROGRAMS = mutt_dotlock pgpring pgpewrap mutt_md5
 
 # Test the .tar file by building everything
-AM_DISTCHECK_CONFIGURE_FLAGS = --enable-debug --enable-flock --enable-gpgme \
+AM_DISTCHECK_CONFIGURE_FLAGS = --enable-flock --enable-gpgme \
 	--enable-mailtool --enable-nfs-fix --enable-notmuch --with-bdb \
 	--with-gdbm --with-gnutls --with-gss --with-kyotocabinet --with-lmdb \
 	--with-mixmaster --with-qdbm --with-sasl --with-tokyocabinet
@@ -69,7 +69,7 @@ AM_CPPFLAGS=-I. -I$(top_srcdir) $(GPGME_CFLAGS)
 
 EXTRA_mutt_SOURCES = browser.h dotlock.c mbyte.h mutt_idna.c mutt_idna.h \
 	mutt_lua.c mutt_sasl.c mutt_notmuch.c mutt_ssl.c mutt_ssl_gnutls.c \
-	remailer.c remailer.h resize.c sha1.c url.h utf8.c wcwidth.c 
+	remailer.c remailer.h resize.c sha1.c url.h utf8.c wcwidth.c
 
 EXTRA_DIST = account.h ascii.h attach.h bcache.h browser.h buffer.h buffy.h \
 	ChangeLog ChangeLog.neomutt ChangeLog.nntp charset.h compress.h copy.h \
